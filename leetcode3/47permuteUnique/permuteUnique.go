@@ -5,13 +5,14 @@ import (
 )
 
 func main() {
-	fmt.Println(permute([]int{1, 2, 3}))
+	// fmt.Println(permuteUnique([]int{1, 1, 2}))
+	fmt.Println(permuteUnique([]int{3, 3, 0, 3}))
 }
 
 /*
-给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。
+给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
 */
-func permute(nums []int) [][]int {
+func permuteUnique(nums []int) [][]int {
 	path := make([]int, 0)
 	ans := make([][]int, 0)
 	used := make(map[int]bool)
@@ -27,6 +28,9 @@ func dfs(nums []int, path []int, used map[int]bool, ans *[][]int) {
 
 	for i := 0; i < len(nums); i++ {
 		if used[i] {
+			continue
+		}
+		if i > 0 && nums[i] == nums[i-1] && !used[i-1] {
 			continue
 		}
 
