@@ -20,12 +20,11 @@ func combinationSum2(candidates []int, target int) [][]int {
 	ans := make([][]int, 0)
 	path := make([]int, 0)
 	used := make(map[int]bool)
-	// dfs(candidates, path, target, 0, &ans)
-	dfs2(candidates, path, target, used, 0, &ans)
+	dfs(candidates, path, target, 0, used, &ans)
 	return ans
 }
 
-func dfs(candidates []int, path []int, target, idx int, ans *[][]int) {
+func dfs(candidates []int, path []int, target, idx int, used map[int]bool, ans *[][]int) {
 	if target == 0 {
 		*ans = append(*ans, append([]int{}, path...))
 		return
@@ -34,43 +33,18 @@ func dfs(candidates []int, path []int, target, idx int, ans *[][]int) {
 		return
 	}
 	for i := idx; i < len(candidates); i++ {
-		if i > idx && candidates[i] == candidates[i-1] {
-			continue
-		}
-		path = append(path, candidates[i])
-		target = target - candidates[i]
-
-		dfs(candidates, path, target, i+1, ans)
-
-		path = path[:len(path)-1]
-		target = target + candidates[i]
-	}
-}
-
-func dfs2(candidates []int, path []int, target int, used map[int]bool, start int, ans *[][]int) {
-	if target == 0 {
-		*ans = append(*ans, append([]int{}, path...))
-		return
-	}
-	if target < 0 {
-		return
-	}
-	for i := start; i < len(candidates); i++ {
 		if used[i] {
 			continue
 		}
-
-		if i > start && candidates[i] == candidates[i-1] {
+		if i > idx && candidates[i] == candidates[i-1] && !used[i-1] {
 			continue
 		}
-		used[i] = true
 		path = append(path, candidates[i])
 		target = target - candidates[i]
 
-		dfs2(candidates, path, target, used, start+1, ans)
+		dfs(candidates, path, target, i+1, used, ans)
 
 		path = path[:len(path)-1]
 		target = target + candidates[i]
-		used[i] = false
 	}
 }

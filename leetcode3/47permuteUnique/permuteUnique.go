@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sort"
 )
 
 func main() {
@@ -13,6 +14,7 @@ func main() {
 给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
 */
 func permuteUnique(nums []int) [][]int {
+	sort.Ints(nums)
 	path := make([]int, 0)
 	ans := make([][]int, 0)
 	used := make(map[int]bool)
