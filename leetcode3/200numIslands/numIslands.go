@@ -5,15 +5,17 @@ import (
 )
 
 func main() {
-	num := []int{1, 2, 3}
+	num := [][]int{{1, 2, 3}}
 	f(num)
 	fmt.Println(num)
 }
 
-func f(num []int) {
+func f(num [][]int) {
 
 	for i := range num {
-		num[i] = 1
+		for j := range num[i] {
+			num[i][j] = 1
+		}
 	}
 }
 

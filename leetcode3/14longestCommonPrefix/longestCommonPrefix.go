@@ -13,9 +13,9 @@ func longestCommonPrefix(strs []string) string {
 	maxS := ""
 	for i := range strs {
 		if len(strs[i]) >= len(maxS) {
-			maxS = strs[i]		}
- :NERDTreeToggle
- }
+			maxS = strs[i]
+		}
+	}
 	ss := []byte(maxS)
 	start := 0
 	finished := false
