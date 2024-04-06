@@ -40,15 +40,15 @@ func inorderTraversal(root *TreeNode) []int {
 	if root == nil {
 		return ans
 	}
-	queue := make([]*TreeNode, 0)
-	queue = append(queue, root)
-	for len(queue) > 0 || root != nil {
+	stark := make([]*TreeNode, 0)
+	stark = append(stark, root)
+	for len(stark) > 0 || root != nil {
 		if root != nil {
-			queue = append(queue, root)
+			stark = append(stark, root)
 			root = root.Left
 		} else {
-			last := queue[len(queue)-1]
-			queue = queue[:len(queue)-1]
+			last := stark[len(stark)-1]
+			stark = stark[:len(stark)-1]
 			ans = append(ans, last.Val)
 			root = last.Right
 		}
