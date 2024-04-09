@@ -12,7 +12,7 @@ func main() {
 	lru.Put(4, 1)
 	fmt.Println(lru.Get(1))
 	fmt.Println(lru.Get(2))
-	// fmt.Println(lru.Get(3))
+	fmt.Println(lru.Get(3))
 }
 
 type Node struct {

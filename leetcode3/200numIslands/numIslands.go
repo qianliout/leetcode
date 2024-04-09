@@ -36,6 +36,7 @@ func numIslands(grid [][]byte) int {
 }
 
 func full(grid [][]byte, col, row int) {
+	if col<0
 	if col < 0 || col >= len(grid) || row < 0 || row >= len(grid[0]) {
 		return
 	}
