@@ -8,7 +8,7 @@ func main() {
 	matrix := [][]int{
 		{1, 2},
 		{1, 3},
-		//{12, 13, 15},
+		// {12, 13, 15},
 	}
 	res := kthSmallest(matrix, 2)
 	fmt.Println("res is ", res)
