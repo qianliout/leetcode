@@ -11,7 +11,7 @@ func main() {
 	fmt.Println(removeKdigits("112", 1))
 }
 
-func removeKdigits(num string, k int) string {
+func removeKdigits2(num string, k int) string {
 	window := make([]byte, 0)
 	remin := len(num) - k
 	for _, ch := range num {
@@ -35,5 +35,28 @@ func removeKdigits(num string, k int) string {
 	if len(window) == 0 {
 		return "0"
 	}
+	return string(window)
+}
+
+func removeKdigits(num string, k int) string {
+	ss := []byte(num)
+	window := make([]byte, 0)
+	drop := k
+	for _, ch := range ss {
+		for drop > 0 && len(window) > 0 && window[len(window)-1] > ch {
+			window = window[:len(window)-1]
+			drop--
+		}
+		window = append(window, ch)
+	}
+	window = window[:len(num)-k]
+	for len(window) > 0 && window[0] == '0' {
+		window = window[1:]
+	}
+
+	if len(window) == 0 {
+		return "0"
+	}
+
 	return string(window)
 }
