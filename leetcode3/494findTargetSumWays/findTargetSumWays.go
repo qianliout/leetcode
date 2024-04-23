@@ -7,6 +7,11 @@ import (
 func main() {
 	fmt.Println(findTargetSumWays([]int{1, 1, 1, 1, 1}, 3))
 	fmt.Println(findTargetSumWays3([]int{1, 1, 1, 1, 1}, 3))
+	fmt.Println(findTargetSumWays4([]int{1, 1, 1, 1, 1}, 3))
+	fmt.Println(findTargetSumWays4([]int{100}, -200))
+	fmt.Println(findTargetSumWays5([]int{200}, -200))
+	fmt.Println(findTargetSumWays6([]int{100}, -200))
+	fmt.Println(findTargetSumWays5([]int{1, 1, 1, 1, 1}, 3))
 }
 
 func findTargetSumWays2(nums []int, target int) int {
@@ -75,4 +80,102 @@ func dfs(nums []int, target, start, cur int, mem map[string]int) int {
 	mem[key] = add + sub
 
 	return add + sub
+}
+
+// 注意target 可能是负数
+func findTargetSumWays4(nums []int, target int) int {
+	sm := 0
+	for _, ch := range nums {
+		sm += ch
+	}
+	if (target+sm)&1 != 0 {
+		return 0
+	}
+
+	find := (target + sm) >> 1
+
+	// 这里如果写成常规的数组，则需要考虑负数导致的下标问题
+	dp := make([]map[int]int, len(nums)+1)
+	for i := range dp {
+		dp[i] = make(map[int]int, find+1)
+	}
+
+	dp[0][0] = 1
+
+	for i := 1; i <= len(nums); i++ {
+		ch := nums[i-1]
+		for j := find; j >= 0; j-- {
+			no := dp[i-1][j]
+			yes := 0
+			if j >= ch {
+				yes = dp[i-1][j-ch]
+			}
+			dp[i][j] = yes + no
+		}
+	}
+	return dp[len(nums)][find]
+}
+
+// 注意target 可能是负数
+func findTargetSumWays5(nums []int, target int) int {
+	sm := 0
+	for _, ch := range nums {
+		sm += ch
+	}
+
+	if (target+sm)&1 != 0 {
+		return 0
+	}
+
+	find := (target + sm) >> 1
+
+	dp := make(map[int]int, find+1)
+	dp[0] = 1
+
+	for i := 1; i <= len(nums); i++ {
+		ch := nums[i-1]
+		for j := find; j >= 0; j-- {
+			no := dp[j]
+			yes := 0
+			if j >= ch {
+				yes = dp[j-ch]
+			}
+			dp[j] = no + yes
+		}
+	}
+	return dp[find]
+}
+
+func findTargetSumWays6(nums []int, target int) int {
+	sm := 0
+	for _, ch := range nums {
+		sm += ch
+	}
+	if (target+sm)&1 != 0 {
+		return 0
+	}
+
+	find := (target + sm) >> 1
+	// find 表示找到的组合相加，可能组成 find 的值，因为target 有负数，这里的 find 可能是一个负数,最好的方式就是直接使用 map，
+	dp := make([][]int, len(nums)+1)
+
+	for i := range dp {
+		dp[i] = make([]int, find+1)
+	}
+
+	dp[0][0] = 1
+
+	for i := 1; i <= len(nums); i++ {
+		ch := nums[i-1]
+		for j := 0; j <= find; j++ {
+			no := dp[i-1][j]
+			yes := 0
+			if j >= ch {
+				yes = dp[i-1][j-ch]
+			}
+			dp[i][j] = yes + no
+
+		}
+	}
+	return dp[len(nums)][find]
 }
