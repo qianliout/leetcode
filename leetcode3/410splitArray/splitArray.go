@@ -46,6 +46,5 @@ func split(nums []int, maxSum int) int {
 		}
 		sum += ch
 	}
-
 	return ans
 }

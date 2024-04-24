@@ -64,7 +64,7 @@ func characterReplacement(s string, k int) int {
 		ri++
 
 		for le <= ri && ri-le > ma+k {
-			// 这里更新了 exit 之后，为啥不更新 ma的值，是个难点
+			// 这里更新了 exit 之后，为啥不更新 ma 的值，是个难点
 			exit[s[le]]--
 			le++
 		}
