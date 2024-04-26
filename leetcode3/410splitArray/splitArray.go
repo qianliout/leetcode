@@ -1,13 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"math"
-
-	. "outback/geeke/leetcode/common/utils"
 )
 
 func main() {
-
+	fmt.Println(splitArray([]int{7, 2, 5, 10, 8}, 2))
+	fmt.Println(splitArray([]int{1, 2, 3, 4, 5}, 1))
+	fmt.Println(splitArray([]int{2, 16, 14, 15}, 2))
+	fmt.Println(split([]int{2, 14, 15, 16}, 29))
 }
 
 /*
@@ -18,21 +20,38 @@ func splitArray(nums []int, k int) int {
 	sum, ma := 0, math.MinInt64
 	for _, ch := range nums {
 		sum += ch
-		ma = Max(ma, ch)
-	}
-	le, ri := ma, sum
-	for le < ri {
-		mid := le + (ri-le)/2
-		m := split(nums, mid)
-		if m == k {
-			ri = mid
-		} else if m > k {
-			ri = mid - 1
-		} else if m < k {
-			le = mid + 1
+		if ch > ma {
+			ma = ch
 		}
 	}
-	return le
+	if k >= len(nums) {
+		return ma
+	}
+	// if k <= 1 {
+	// 	return sum
+	// }
+
+	left, right := ma, sum
+	for left <= right {
+		mid := left + (right-left+1)/2
+		m := split(nums, mid)
+		if m == k {
+			// 看一下是否还有更小的
+			right = mid - 1
+		} else if m > k {
+			// 说明，还可以放更大的值
+			left = mid + 1
+		} else if m < k {
+			// 说明,mid 放进去之后分的次数少，说明还可以放一个更多小的值
+			right = mid - 1
+		}
+	}
+	// 检测边界
+	if left < 0 || split(nums, left) > k || left > sum {
+		return -1
+	}
+
+	return left
 }
 
 // 各组和和最大值是 maxSum,最少要拆分成多少组
@@ -46,5 +65,5 @@ func split(nums []int, maxSum int) int {
 		}
 		sum += ch
 	}
-	return ans
+	return ans + 1
 }

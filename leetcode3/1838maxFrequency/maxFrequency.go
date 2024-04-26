@@ -9,7 +9,7 @@ func main() {
 	fmt.Println(maxFrequency([]int{1, 2, 4}, 5))
 }
 
-func maxFrequency(nums []int, k int) int {
+func maxFrequency2(nums []int, k int) int {
 	n := len(nums)
 	sort.Ints(nums)
 	sum := make([]int, n+1)
@@ -37,6 +37,34 @@ func maxFrequency(nums []int, k int) int {
 
 	// 结束时 l=r,所以返回啥都是一样的
 	return l
+}
+
+func maxFrequency(nums []int, k int) int {
+	n := len(nums)
+	sort.Ints(nums)
+	sum := make([]int, n+1)
+
+	for i := 1; i < len(sum); i++ {
+		sum[i] = sum[i-1] + nums[i-1]
+	}
+	// 滑动+二分
+	left, right := 0, n+1
+	for left < right {
+		// 找最大的频率，相当于找右边界
+		mid := left + (right-left+1)>>1
+		if mid >= 0 && mid < n+1 && check(nums, mid, k, sum) {
+			left = mid
+		} else {
+			right = mid - 1
+		}
+	}
+	// 这个题一定是有答案的，可以不检查最后的结果，但是检测一次是个好习惯
+	if left < 0 || left >= n+1 || !check(nums, left, k, sum) {
+		return -1
+	}
+
+	// 结束时 l=r,所以返回啥都是一样的
+	return left
 }
 
 func check(nums []int, length, k int, sum []int) bool {

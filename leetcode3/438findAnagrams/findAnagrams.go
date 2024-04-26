@@ -32,7 +32,8 @@ func findAnagrams2(s string, p string) []int {
 
 		// 判断是否需要收缩
 		// 对于滑动窗口的题，因为每次移动一个，所以基本上都是直接使用一个 if 搞定
-		if ri >= len(p) {
+		// 但是用 for 是个好习惯
+		for ri >= len(p) {
 			window[int32(s[le])]--
 			le++
 		}

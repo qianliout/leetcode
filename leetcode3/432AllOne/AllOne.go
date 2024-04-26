@@ -1,30 +1,43 @@
 package main
 
+import (
+	"container/list"
+)
+
 func main() {
 	all := Constructor()
 	all.Inc("hello")
 	all.Inc("hello")
 }
 
+type Entry struct {
+	key  string
+	freq int
+}
+
 type AllOne struct {
-	Data   map[string]int
-	Max    string
-	Min    string
-	MaxCnt int
-	MinCnt int
+	keyToNode  map[string]*list.Element
+	freqToList map[int]*list.List // key-->频率
 }
 
 func Constructor() AllOne {
 	return AllOne{
-		Data:   make(map[string]int),
-		Max:    "",
-		Min:    "",
-		MaxCnt: 0,
-		MinCnt: 0,
+		keyToNode:  make(map[string]*list.Element),
+		freqToList: make(map[int]*list.List),
 	}
 }
 
 func (this *AllOne) Inc(key string) {
+
+	node, ok := this.keyToNode[key]
+	if ok {
+		en := &Entry{
+			key:  key,
+			freq: 0,
+		}
+
+	}
+
 	this.Data[key]++
 	if this.Data[key] > this.MinCnt {
 		this.Max = key
