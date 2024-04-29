@@ -7,11 +7,12 @@ import (
 )
 
 func main() {
-	// fmt.Println(findSubstringInWraproundString("zab"))
-	// fmt.Println(findSubstringInWraproundString("cac"))
-	// fmt.Println(findSubstringInWraproundString("cdefghefghijklmnopqrstuvwxmnijklmnopqrstuvbcdefghijklmnopqrstuvwabcddefghijklfghijklmabcdefghijklmnopqrstuvwxymnopqrstuvwxyz"))
-	// fmt.Println(findSubstringInWraproundString2("cdefghefghijklmnopqrstuvwxmnijklmnopqrstuvbcdefghijklmnopqrstuvwabcddefghijklfghijklmabcdefghijklmnopqrstuvwxymnopqrstuvwxyz"))
+	fmt.Println(findSubstringInWraproundString("zab"))
+	fmt.Println(findSubstringInWraproundString("cac"))
+	fmt.Println(findSubstringInWraproundString("cdefghefghijklmnopqrstuvwxmnijklmnopqrstuvbcdefghijklmnopqrstuvwabcddefghijklfghijklmabcdefghijklmnopqrstuvwxymnopqrstuvwxyz"))
+	fmt.Println(findSubstringInWraproundString2("cdefghefghijklmnopqrstuvwxmnijklmnopqrstuvbcdefghijklmnopqrstuvwabcddefghijklfghijklmabcdefghijklmnopqrstuvwxymnopqrstuvwxyz"))
 	fmt.Println(findSubstringInWraproundString("zaba"))
+	fmt.Println(findSubstringInWraproundString2("zaba"))
 }
 
 func findSubstringInWraproundString2(s string) int {
@@ -46,26 +47,51 @@ func findSubstringInWraproundString2(s string) int {
 	return ans
 }
 
-func findSubstringInWraproundString(s string) int {
-	// dp[i]是指s到i这个位置（包括i），存在的最长的子串位数
+func findSubstringInWraproundString3(s string) int {
+	// 把a-z映射到 0-25
+	// dp[i]是指s到b-'b'这个位置（包括字母 b），存在的最长的子串位数
 	// 情况一：在base 中，s[i]是a[i-1]的下一个字符，说明接的上，dp[i] = dp[i-1]+1
 	// 情况二：在base 中，s[i]不是s[i-1]的下一个字符，说明接不上，dp[i] = +1
 
 	// 要去重
 	// 初值 dp[i]=1
+	s = "^" + s
 	dp := make(map[int]int)
-	for i := 0; i < len(s); i++ {
+	cnt := 1
+	for i := 1; i < len(s); i++ {
 		idx := int(s[i] - 'a')
-		dp[i] = Max(1, dp[idx])
-		if i > 0 {
-			if check(s[i-1], s[i]) {
-				dp[i] = Max(dp[i], dp[i-1]+1)
-			} else {
-				dp[i] = 1
-			}
+
+		if check(s[i-1], s[i]) {
+			cnt++
+		} else {
+			cnt = 1
 		}
+		dp[idx] = Max(dp[idx], cnt)
 	}
 	ans := 0
+	for _, ch := range dp {
+		ans += ch
+	}
+	return ans
+}
+
+// 最容易理解的方法
+func findSubstringInWraproundString(s string) int {
+	pre := 0
+	// 把a-z映射到 0-25
+	// dp[i]以字母i+'a'结尾，存在的最长的子串的长度
+	dp := make([]int, 26)
+	for i := 0; i < len(s); i++ {
+		if i > 0 && check(s[i-1], s[i]) {
+			pre += 1
+		} else {
+			pre = 1
+		}
+		idx := int(s[i] - 'a')
+		dp[idx] = Max(dp[idx], pre)
+	}
+	ans := 0
+	// 前缀和的思想
 	for _, ch := range dp {
 		ans += ch
 	}
