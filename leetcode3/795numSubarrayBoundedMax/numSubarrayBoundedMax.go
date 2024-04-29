@@ -56,29 +56,3 @@ func slidingWindow(nums []int, k int) int {
 	}
 	return ans
 }
-
-// 最容易理解的方法
-/**
-func findSubstringInWraproundString(s string) int {
-	pre := 0
-	// 把a-z映射到 0-25
-	// dp[i]以字母i+'a'结尾，存在的最长的子串的长度
-	dp := make([]int, 26)
-	for i := 0; i < len(s); i++ {
-		if i > 0 && check(s[i-1], s[i]) {
-			pre += 1
-		} else {
-			pre = 1
-		}
-		idx := int(s[i] - 'a')
-		dp[idx] = Max(dp[idx], pre)
-	}
-	ans := 0
-	// 前缀和的思想
-	for _, ch := range dp {
-		ans += ch
-	}
-	return ans
-}
-
-*/
