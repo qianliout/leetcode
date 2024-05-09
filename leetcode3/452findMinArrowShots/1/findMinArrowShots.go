@@ -14,7 +14,6 @@ func findMinArrowShots(points [][]int) int {
 }
 
 // 以起始点排序
-
 func sortByStart(points [][]int) int {
 	if len(points) == 0 {
 		return 0
