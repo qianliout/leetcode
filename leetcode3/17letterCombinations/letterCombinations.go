@@ -6,6 +6,7 @@ import (
 
 func main() {
 	fmt.Println(letterCombinations("23"))
+	fmt.Println(letterCombinations("234"))
 }
 
 func letterCombinations2(digits string) []string {

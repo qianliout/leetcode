@@ -17,7 +17,7 @@ func findKthNumber(n int, k int) int {
 	// 第一个大是最小的一个，所以这里就是k>1
 	for k > 1 {
 		cnt := getCnt(prefix, n) // 获得当前前缀下所有子节点的和
-		if cnt < k {             // 当前前缀的所有数都比 k 小，说明第k个数不在当前前缀下,就去找下一个
+		if cnt < k {             // 当前前缀的所有数的总数还没有 k 个，说明第k个数不在当前前缀下,就去找下一个
 			prefix++
 			k = k - cnt
 		} else { // 第 k 个数在当前前缀下
