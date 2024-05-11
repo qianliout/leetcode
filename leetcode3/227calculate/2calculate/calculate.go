@@ -8,13 +8,15 @@ func main() {
 	// fmt.Println(calculate("3+2*2"))
 	// fmt.Println(calculate("3+2/2"))
 	// fmt.Println(calculate(" 2/2 "))
-	fmt.Println(calculate(" 3/2 "))
-	nums := make([]int, 0)
-	nums = help(nums)
-	fmt.Println(nums)
-
+	// fmt.Println(calculate(" 3/2 "))
+	// fmt.Println(calculate(" (-5*3) "))
+	// fmt.Println(calculate(" -5-3 "))
+	fmt.Println(calculate("-5*-3"))
+	// fmt.Println(calculate(" (1+(4+5)+(2)-3)+(6)+(8) "))
 }
 
+// -5*-3 这种会有 bug
+// 表达式中的所有整数都是非负整数，且在范围 [0, 231 - 1] 内
 func calculate(s string) int {
 	// s = strings.ReplaceAll(s, " ", "")
 	ss := []byte(s)
@@ -70,8 +72,9 @@ func calculate(s string) int {
 			continue
 		}
 
-		// 走到这里就是加减等符号了（不包括括号）
-		if idx > 0 && (ss[idx-1] == '(' || ss[idx-1] == '+' || ss[idx-1] == '-') {
+		// 走到这里就是加减乘除等符号了（不包括括号）
+		if idx > 0 && !digit(ss[idx-1]) {
+			// (-5*3), (+5+2) 这种，括号后面加上负号
 			// 为防止 () 内出现的首个字符为运算符，将所有的空格去掉，并将 (- 替换为 (0-，(+ 替换为 (0+（当然也可以不进行这样的预处理，将这个处理逻辑放到循环里去做）
 			nums = append(nums, 0)
 		}
@@ -101,6 +104,7 @@ func calculate(s string) int {
 // 因为会改变大小，所以一定要传指针
 // 如果不传指针则需要用返回值
 func calc(nums *[]int, ops *[]byte) {
+	fmt.Println("pre calc", *nums, *ops)
 	if len(*nums) < 2 || len(*ops) == 0 {
 		return
 	}
@@ -125,14 +129,12 @@ func calc(nums *[]int, ops *[]byte) {
 		//  还可以加其他操作
 	}
 	*nums = append(*nums, ans)
+	fmt.Println("after calc", *nums, *ops)
 }
 
-func help(nums []int) []int {
-	nums = append(nums, 1)
-	nums = append(nums, 1)
-	nums = append(nums, 1)
-	nums = append(nums, 1)
-	nums = append(nums, 1)
-	nums = append(nums, 1)
-	return nums
+func digit(ch byte) bool {
+	if ch >= '0' && ch <= '9' {
+		return true
+	}
+	return false
 }
