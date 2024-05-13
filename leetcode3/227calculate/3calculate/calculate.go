@@ -20,6 +20,7 @@ func calculate(s string) int {
 
 	ans := 0
 	num := 0
+	// 这样写 每次的 i 都是新的变量，所以下面对 i 的操作是不会生效的
 	// for i := range ss {
 	for i := 0; i < len(ss); i++ {
 		if ss[i] == ' ' {
@@ -34,7 +35,6 @@ func calculate(s string) int {
 				break
 			}
 		}
-		fmt.Println("I", i)
 		switch preOP {
 		case '+':
 			nums = append(nums, num)

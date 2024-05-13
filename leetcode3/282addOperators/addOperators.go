@@ -8,6 +8,7 @@ import (
 func main() {
 	fmt.Println(addOperators("123", 6))
 	fmt.Println(addOperators("1203", 6))
+	fmt.Println(addOperators("3456237490", 9191))
 }
 
 func addOperators(num string, target int) []string {
@@ -37,7 +38,7 @@ func dfs(nums []byte, start int, path string, pre int, cur, target int, res *[]s
 			dfs(nums, i+1, pa, nu, nu, target, res)
 		} else {
 			dfs(nums, i+1, path+"+"+pa, nu, cur+nu, target, res)
-			dfs(nums, i+1, path+"-"+pa, nu, cur-nu, target, res)
+			dfs(nums, i+1, path+"-"+pa, -nu, cur-nu, target, res)
 			dfs(nums, i+1, path+"*"+pa, pre*nu, cur-pre+pre*nu, target, res)
 		}
 	}
