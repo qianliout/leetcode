@@ -15,12 +15,13 @@ func main() {
 
 func partition(nums []int, low, high int) int {
 	pivot := nums[low]
+	// 以nums[low]做为 pivot 元素
 	// j 表示小堆的最后一个元素的位置，当还没有小堆时，就是low
 	j := low
 	// i 表示乱堆的开始位置
 	for i := low + 1; i <= high; i++ {
 		ch := nums[i]
-		// 如果ch 大于 pivot 说明他本来就应该在大堆中，所以只需要移到 i就行
+		// 如果ch 大于 pivot 说明他本来就应该在大堆中，所以只需要移动 i就行（i++的操作）
 		// if ch >= pivot {
 		// 	continue
 		// }
