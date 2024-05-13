@@ -12,6 +12,7 @@ func main() {
 	// fmt.Println(calculate(" (-5*3) "))
 	// fmt.Println(calculate(" -5-3 "))
 	fmt.Println(calculate("-5*-3"))
+	fmt.Println(calculate("1 + 1"))
 	// fmt.Println(calculate(" (1+(4+5)+(2)-3)+(6)+(8) "))
 }
 
@@ -104,7 +105,6 @@ func calculate(s string) int {
 // 因为会改变大小，所以一定要传指针
 // 如果不传指针则需要用返回值
 func calc(nums *[]int, ops *[]byte) {
-	fmt.Println("pre calc", *nums, *ops)
 	if len(*nums) < 2 || len(*ops) == 0 {
 		return
 	}
@@ -129,7 +129,6 @@ func calc(nums *[]int, ops *[]byte) {
 		//  还可以加其他操作
 	}
 	*nums = append(*nums, ans)
-	fmt.Println("after calc", *nums, *ops)
 }
 
 func digit(ch byte) bool {

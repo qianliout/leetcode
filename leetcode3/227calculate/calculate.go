@@ -6,9 +6,14 @@ import (
 
 func main() {
 	fmt.Println(calculate("3+2*2"))
+	fmt.Println(calculate("1+1"))
+	fmt.Println(calculate(" 3/2 "))
+	fmt.Println(calculate("0-2147483647"))
 }
 
 // 只有加减乘除
+// 题目中说了，只有非负数，所以不会有-5*-3 这种情况
+
 func calculate(s string) int {
 	ans, num := 0, 0
 	nstak := make([]int, 0)
