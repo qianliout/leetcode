@@ -33,7 +33,7 @@ func dfs(n, left, right int, path []byte, ans *[]string) {
 	}
 }
 
-func generateParenthesis(n int) []string {
+func generateParenthesis2(n int) []string {
 	if n <= 0 {
 		return []string{""}
 	}
@@ -49,4 +49,24 @@ func generateParenthesis(n int) []string {
 		}
 	}
 	return res
+}
+
+func generateParenthesis(n int) []string {
+	ans := make([]string, 0)
+	if n == 0 {
+		ans = append(ans, "")
+		return ans
+	}
+
+	for i := 0; i < n; i++ {
+		left := generateParenthesis2(i)
+		right := generateParenthesis2(n - i - 1)
+		for _, le := range left {
+			for _, ri := range right {
+				// ans = append(ans, "("+le+")"+ri)
+				ans = append(ans, "("+le+ri+")")
+			}
+		}
+	}
+	return ans
 }

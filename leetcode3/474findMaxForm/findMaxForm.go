@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	. "outback/geeke/leetcode/common/utils"
@@ -9,6 +10,9 @@ import (
 func main() {
 	fmt.Println(findMaxForm([]string{"10", "0001", "111001", "1", "0"}, 5, 3))
 	fmt.Println(findMaxForm([]string{"0", "1101", "01", "00111", "1", "10010", "0", "0", "00", "1", "11", "0011"}, 63, 36))
+
+	ctx := context.Background()
+	context.WithValue(ctx, "", "")
 }
 
 func findMaxForm2(strs []string, m int, n int) int {
@@ -60,7 +64,8 @@ type Node struct {
 	Zero int
 }
 
-func findMaxForm(strs []string, m int, n int) int {
+// timeout
+func findMaxForm3(strs []string, m int, n int) int {
 	nodes := make([]Node, len(strs))
 	for i := range strs {
 		nodes[i] = help(strs[i])
@@ -72,21 +77,35 @@ func findMaxForm(strs []string, m int, n int) int {
 }
 
 // 背包
-func usedp(strs []Node, m, n int) int {
-	dp := make([][][]int, len(strs))
+// m 个 0 和 n 个 1
+func findMaxForm(strs []string, m int, n int) int {
+	nums1 := make([]int, len(strs))
+	nums0 := make([]int, len(strs))
+	for i := range strs {
+		nums1[i] = count1(strs[i])
+		nums0[i] = len(strs[i]) - count1(strs[i])
+	}
+	dp := make([][]int, m+1)
 	for i := range dp {
-		dp[i] = make([][]int, m)
-		for j := range dp[i] {
-			dp[i][j] = make([]int, n)
+		dp[i] = make([]int, n+1)
+	}
+	for i := 0; i < len(strs); i++ {
+		for j := m; j >= nums0[i]; j-- {
+			for k := n; k >= nums1[i]; k-- {
+				dp[j][k] = Max(dp[j][k], dp[j-nums0[i]][k-nums1[i]]+1)
+			}
 		}
 	}
-	// 初值
 
-	for i := 0; i < len(strs); i++ {
-		st := strs[i]
-		// 不选
-		dp[i][]
+	return dp[m][n]
+}
 
+func count1(str string) int {
+	ans := 0
+	for i := range str {
+		if str[i]-48 == 1 {
+			ans++
+		}
 	}
-
+	return ans
 }
