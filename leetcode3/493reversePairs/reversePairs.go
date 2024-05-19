@@ -10,7 +10,7 @@ func main() {
 */
 
 // timeout
-func reversePairs(nums []int) int {
+func reversePairs2(nums []int) int {
 	ans := 0
 	for i := 0; i < len(nums); i++ {
 		for j := i + 1; j < len(nums); j++ {
@@ -20,4 +20,8 @@ func reversePairs(nums []int) int {
 		}
 	}
 	return ans
+}
+
+func reversePairs(nums []int) int {
+
 }
