@@ -16,10 +16,16 @@ func MergeSort(nums []int) {
 	if len(nums) <= 1 {
 		return
 	}
+	// if len(nums) == 2 {
+	// 	if nums[0] > nums[1] {
+	// 		nums[1], nums[0] = nums[0], nums[1]
+	// 	}
+	// 	return
+	// }
 
 	mid := len(nums) / 2
-	mergeSort(nums[:mid])
-	mergeSort(nums[mid:])
+	MergeSort(nums[:mid])
+	MergeSort(nums[mid:])
 	Merge(nums, mid)
 }
 
@@ -33,15 +39,4 @@ func Merge(nums []int, mid int) {
 			nums[j], nums[j-1] = nums[j-1], nums[j]
 		}
 	}
-}
-
-func mergeSort(arr []int) {
-	if len(arr) <= 1 {
-		return
-	}
-
-	mid := len(arr) / 2
-	mergeSort(arr[:mid])
-	mergeSort(arr[mid:])
-	Merge(arr, mid)
 }
