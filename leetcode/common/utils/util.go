@@ -5,23 +5,23 @@ import (
 )
 
 func Min(nums ...int) int {
-	min := math.MaxInt64
+	data := math.MaxInt64
 	for _, num := range nums {
-		if num < min {
-			min = num
+		if num < data {
+			data = num
 		}
 	}
-	return min
+	return data
 }
 
 func Max(nums ...int) int {
-	max := math.MinInt64
+	data := math.MinInt64
 	for _, num := range nums {
-		if num > max {
-			max = num
+		if num > data {
+			data = num
 		}
 	}
-	return max
+	return data
 }
 
 func AbsSub(n1, n2 int) int {

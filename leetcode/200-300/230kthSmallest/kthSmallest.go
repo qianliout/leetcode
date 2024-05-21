@@ -1,7 +1,7 @@
 package main
 
 import (
-	. "qianliout/leetcode/leetcode/common/treenode"
+	. "outback/geeke/leetcode/common/treenode"
 )
 
 func main() {

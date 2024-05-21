@@ -27,7 +27,7 @@ import (
  输出: "2314"
 */
 
-//定义一个全局变量，各个递归中可以更改
+// 定义一个全局变量，各个递归中可以更改
 var remind int
 
 func main() {
@@ -45,7 +45,7 @@ func getPermutation(n int, k int) string {
 	path := make([]int, 0)
 	used := make(map[int]bool)
 	dfs(n, n, k, 0, path, used, &res)
-	//fmt.Println("res is ", res)
+	// fmt.Println("res is ", res)
 	result := res[0]
 	return strings.Replace(fmt.Sprint(result)[1:len(fmt.Sprint(result))-1], " ", "", -1)
 }
@@ -53,13 +53,13 @@ func getPermutation(n int, k int) string {
 // 这种写法是对的，但是会超出时间限制，
 func dfs(nums, n, k, left int, path []int, used map[int]bool, res *[][]int) {
 	if len(path) == n {
-		//fmt.Println("remind1 is", remind, "path is ", path)
+		// fmt.Println("remind1 is", remind, "path is ", path)
 		if remind == k-1 {
 			*res = append(*res, append([]int{}, path...))
 			return
 		} else {
 			remind += 1
-			//fmt.Println("remind2 is", remind)
+			// fmt.Println("remind2 is", remind)
 			return
 		}
 	}
