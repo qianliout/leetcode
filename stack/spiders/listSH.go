@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"outback/stack/items"
-	"outback/stack/pipline"
+	"outback/geeke/stack/items"
+	"outback/geeke/stack/pipline"
 
 	"github.com/gocolly/colly"
 	"github.com/rs/zerolog/log"

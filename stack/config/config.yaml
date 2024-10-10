@@ -1,0 +1,14 @@
+server:
+  host: "localhost"
+  port: 8080
+
+database:
+  username: "root"
+  password: "root"
+  host: "127.0.0.1"
+  port: 3306
+  name: "stack"
+
+spiderConfig:
+  debug:true
+

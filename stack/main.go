@@ -1,9 +1,6 @@
 package main
 
 import (
-	"outback/stack/pipline"
-	"outback/stack/spiders"
-
 	"github.com/rs/zerolog/log"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

@@ -12,8 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"outback/stack/items"
-	"outback/stack/pipline"
+	"outback/geeke/stack/pipline"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/rs/zerolog/log"

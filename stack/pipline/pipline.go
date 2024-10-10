@@ -3,7 +3,7 @@ package pipline
 import (
 	"time"
 
-	"outback/stack/items"
+	"outback/geeke/stack/items"
 
 	"github.com/rs/zerolog/log"
 	"golang.org/x/net/context"
