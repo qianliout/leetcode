@@ -9,6 +9,6 @@ database:
   port: 3306
   name: "stack"
 
-spiderConfig:
+crawl:
   debug:true
 

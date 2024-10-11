@@ -3,16 +3,14 @@ package items
 // 股票列表
 
 type NameCode struct {
-	ID   int64  `gorm:"column:id"`
-	Name string `gorm:"column:name"` // 名字
-	Code string `gorm:"column:code"` // 代码
-
-	Profile    int64   `gorm:"profile"`
-	CashFlow   int64   `gorm:"cashFlow"`
-	Balance    int64   `gorm:"balance"`
-	StockPrice float64 `gorm:"stockPrice"`
-	CrawlDate  int64   `gorm:"crawlDate"`
-	SHSZ       string  `gorm:"column:shsz" gorm:"SHSZ"`
+	ID       int64  `gorm:"column:id"`
+	Name     string `gorm:"column:name"`     // 名字
+	Code     string `gorm:"column:code"`     // 代码
+	Price    int64  `gorm:"column:price"`    // 价格
+	CrawlAt  int64  `gorm:"column:crawl_at"` // 爬取时间
+	Plate    string `gorm:"column:plate"`    // 板块：主版，三版，创业版
+	Industry string `gorm:"column:industry"` // 行业
+	Exchange string `gorm:"column:exchange"` // 交易所
 
 	CreatedAt int64 `gorm:"autoCreateTime:milli;column:created_at"` // milliseconds
 	UpdatedAt int64 `gorm:"autoUpdateTime:milli;column:updated_at"` // milliseconds
@@ -38,3 +36,9 @@ type DataSH struct {
 	Code string `json:"SECURITY_CODE_A"`
 	Name string `json:"COMPANY_ABBR"`
 }
+
+const (
+	ExchangeShanghai = "sh"
+	ExchangeShenzhen = "sz"
+	ExchangeBeijing  = "bj"
+)

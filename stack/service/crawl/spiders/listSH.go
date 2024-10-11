@@ -8,17 +8,17 @@ import (
 	"time"
 
 	"outback/geeke/stack/items"
-	"outback/geeke/stack/pipline"
+	"outback/geeke/stack/service/crawl/pipline"
 
 	"github.com/gocolly/colly"
 	"github.com/rs/zerolog/log"
 )
 
 type NameCode struct {
-	create pipline.Create
+	create pipline.CreateDal
 }
 
-func NewNameCode(cre pipline.Create) *NameCode {
+func NewNameCode(cre pipline.CreateDal) *NameCode {
 
 	return &NameCode{create: cre}
 }
@@ -27,9 +27,8 @@ func (s *NameCode) ListSh() {
 	// NewCollector(options ...func(*Collector)) *Collector
 	// 声明初始化NewCollector对象时可以指定Agent，连接递归深度，URL过滤以及domain限制等
 	c := colly.NewCollector(
-		// colly.AllowedDomains("news.baidu.com"),
 		colly.UserAgent("Opera/9.80 (Windows NT 6.1; U; zh-cn) Presto/2.9.168 Version/11.50"),
-		// colly.AllowedDomains("sina.com.cn"),
+		colly.AllowedDomains("sina.com.cn"),
 		colly.MaxDepth(-1),
 	)
 
@@ -107,6 +106,7 @@ func (s *NameCode) ListSh() {
 	c.OnError(func(response *colly.Response, err error) {
 		log.Error().Err(err).Msg(response.Ctx.Get("url"))
 	})
+	// 上证
 	for i := 1; i <= 66; i++ {
 		url := fmt.Sprintf("http://query.sse.com.cn/security/stock/getStockListData2.do?&isPagination=true&stockCode=&csrcCode=&areaName=&stockType=1&pageHelp.cacheSize=1&pageHelp.beginPage=%d&pageHelp.pageSize=25&pageHelp.pageNo=%d&pageHelp.endPage=651&_=1633510195103", i, i)
 		c.Visit(url)
