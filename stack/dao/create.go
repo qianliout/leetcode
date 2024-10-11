@@ -67,13 +67,19 @@ func (dal *CreateDao) CreateProfile(ctx context.Context, data *items.Profile) er
 
 func (dal *CreateDao) CreateNameCode(ctx context.Context, data *items.NameCode) error {
 	data.Serialize()
+	if err := data.Check(); err != nil {
+		return nil
+	}
 	ctx, cancelFunc := context.WithTimeout(ctx, 5*time.Second)
 	defer cancelFunc()
 
 	db := dal.db.Table(data.TableName()).WithContext(ctx)
-	if err := db.Where("code = ?", data.Code).
-		Delete(&items.NameCode{}).Error; err != nil {
+	res := make([]*items.NameCode, 0)
+	if err := db.Where("code = ?", data.Code).Find(&res).Error; err != nil {
 		return err
+	}
+	if len(res) > 0 {
+		return nil
 	}
 	err := db.Create(data).Error
 	return err

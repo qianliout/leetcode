@@ -1,12 +1,14 @@
 package items
 
+import "fmt"
+
 // 股票列表
 
 type NameCode struct {
 	ID       int64  `gorm:"column:id"`
 	Name     string `gorm:"column:name"`     // 名字
 	Code     string `gorm:"column:code"`     // 代码
-	Price    int64  `gorm:"column:price"`    // 价格
+	Price    int64  `gorm:"column:price"`    // 价格的100倍
 	CrawlAt  int64  `gorm:"column:crawl_at"` // 爬取时间
 	Plate    string `gorm:"column:plate"`    // 板块：主版，三版，创业版
 	Industry string `gorm:"column:industry"` // 行业
@@ -21,6 +23,21 @@ func (vi *NameCode) TableName() string {
 }
 
 func (vi *NameCode) Serialize() {
+}
+
+func (vi *NameCode) LogStr() string {
+	str := fmt.Sprintf("code:%s,name:%s", vi.Code, vi.Name)
+	return str
+}
+
+func (vi *NameCode) Check() error {
+	if vi.Name == "" {
+		return fmt.Errorf("name is empty")
+	}
+	if vi.Code == "" {
+		return fmt.Errorf("code is empty")
+	}
+	return nil
 }
 
 type Industry struct {

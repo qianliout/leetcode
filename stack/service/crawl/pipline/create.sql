@@ -1,17 +1,19 @@
 use stack;
-create table name_codes
+create table names
 (
-    id          bigint      not null auto_increment primary key,
-    name        varchar(30) not null default '',
-    code        varchar(10) not null default '',
-    profile     bigint      not null default 0,
-    cash_flow   bigint      not null default 0,
-    balance     bigint      not null default 0,
-    stock_price float       not null default 0,
-    crawl_date  bigint      not null default 0,
-    shsz        varchar(10) not null default '',
-    unique key ` idx_code ` (` code `)
+    id           bigint       not null auto_increment primary key,
+    code         varchar(10)  not null default '',
+    name         varchar(100) not null default '',
+    price        bigint       not null default 0,
+    plate        varchar(200) not null default '',
+    industry     varchar(200) not null default '',
+    exchange     varchar(200) not null default '',
+    crawl_at     bigint       not null default 0,
+    `created_at` bigint       not null default 0,
+    `updated_at` bigint       not null default 0,
+    unique key `idx_code` (`code`)
 );
+
 create table profiles
 (
     id                 bigint not null auto_increment primary key,
