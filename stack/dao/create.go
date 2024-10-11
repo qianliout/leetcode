@@ -1,4 +1,4 @@
-package pipline
+package dao
 
 import (
 	"context"
@@ -14,27 +14,10 @@ type CreateDal interface {
 	CreateBalance(ctx context.Context, data *items.Balance) error
 	CreateCashFlow(ctx context.Context, data *items.CashFlow) error
 	CreateNameCode(ctx context.Context, data *items.NameCode) error
-	// SearchNameCode(ctx context.Context, param *items.SearchNameCodeParam) ([]items.NameCode, error)
 }
 
 type CreateDao struct {
 	db *gorm.DB
-}
-
-func (dal *CreateDao) SearchNameCode(ctx context.Context, param items.SearchNameCodeParam) ([]items.NameCode, error) {
-	ctx, cancelFunc := context.WithTimeout(ctx, 5*time.Second)
-	defer cancelFunc()
-
-	res := make([]items.NameCode, 0)
-	db := dal.db.WithContext(ctx).Table(new(items.NameCode).TableName())
-	if param.Name != "" {
-		db = db.Where("name like ?", "%"+param.Name+"%")
-	}
-	if param.Code != "" {
-		db = db.Where("code = ?", param.Code)
-	}
-	err := db.Find(&res).Error
-	return res, err
 }
 
 func (dal *CreateDao) CreateBalance(ctx context.Context, data *items.Balance) error {
@@ -96,6 +79,6 @@ func (dal *CreateDao) CreateNameCode(ctx context.Context, data *items.NameCode) 
 	return err
 }
 
-func NewCreate(db *gorm.DB) *CreateDao {
+func NewCreateDao(db *gorm.DB) *CreateDao {
 	return &CreateDao{db: db}
 }
